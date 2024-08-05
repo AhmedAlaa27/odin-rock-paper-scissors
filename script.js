@@ -1,3 +1,5 @@
+let humanScore = 0, computerScore = 0
+
 function getComputerChoice() {
 
     choice = Math.floor(Math.random() * 3)
@@ -8,24 +10,17 @@ function getComputerChoice() {
 
 }
 
-function getHumanChoice() {
-    
-    let choice = parseInt(prompt("1. Rock\n2. Paper\n3. Scissors\n"))
+function playRound(humanChoice, computerChoice) {
 
-    if (choice == 1) return "rock"
-    else if (choice == 2) return "paper"
-    else if (choice == 3) return "scissors"
+    const resultDiv = document.querySelector(".result")
+    const humanScoreDiv = document.querySelector(".human-score")
+    const computerScoreDiv = document.querySelector(".computer-score")
 
-}
+    if (humanScore < 5 && computerScore < 5) {
 
-function playGame() {
-
-    let humanScore = 0, computerScore = 0
-
-    function playRound(humanChoice, computerChoice) {
-    
         if (humanChoice == computerChoice) {
             console.log("It's a tie!")
+            resultDiv.textContent = "It's a TIE!"
         } else if (
             (humanChoice === "rock" && computerChoice === "scissors") ||
             (humanChoice === "paper" && computerChoice === "rock") ||
@@ -33,22 +28,32 @@ function playGame() {
         ) {
             console.log("Human WON!")
             humanScore++
+            resultDiv.textContent = `Human WON!`
+            humanScoreDiv.textContent = `Human Score: ${humanScore}`
         } else {
             console.log("Computer WON!")
             computerScore++
+            resultDiv.textContent = `Computer WON!`
+            computerScoreDiv.textContent = `Computer Score: ${computerScore}`
         }
     
+    } else {
+        resultDiv.textContent = humanChoice == 5 ? "Human has won" : "Computer has won"
     }
-
-    for (let i = 1; i <= 5; i++) {
-        let humanChoice = getHumanChoice()
-        let computerChoice = getComputerChoice()
-
-        playRound(humanChoice, computerChoice)
-    }
-
-    console.log(`Human Score: ${humanScore} \nComputer Score: ${computerScore}`)
 
 }
 
-playGame()
+const buttons = document.querySelectorAll("button")
+buttons.forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+        console.log(button.className)
+
+        let humanChoice = button.className
+        let computerChoice = getComputerChoice()
+
+        playRound(humanChoice, computerChoice)
+
+    })
+})
