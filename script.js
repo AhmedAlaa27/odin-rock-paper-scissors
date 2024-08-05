@@ -17,3 +17,5 @@ function getHumanChoice() {
     else if (choice == 3) return "Scissors"
 
 }
+
+let humanScore = 0, computerScore = 0 
